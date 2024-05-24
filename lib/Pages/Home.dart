@@ -5,13 +5,31 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-      backgroundColor: const Color(0xFF232F4B),
-        title: const Text("Bienvenido =w="),
+        backgroundColor: const Color(0xFF232F4B),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              height: 40, // Ajusta la altura de la imagen según sea necesario
+            ),
+            const SizedBox(width: 10), // Añade un espacio entre la imagen y el texto
+            const Text(
+              "Bienvenido =w=",
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 40,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+        toolbarHeight: 80.0,
       ),
-    body: const Center(child: Text ("Sexo"),)
-
+      body: const Center(
+        child: Text("Sexo"),
+      ),
     );
   }
 }
