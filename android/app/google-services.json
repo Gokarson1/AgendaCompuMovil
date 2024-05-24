@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "919817436600",
+    "project_id": "cm-agendamovil",
+    "storage_bucket": "cm-agendamovil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919817436600:android:da7cbde16233a49298e34d",
+        "android_client_info": {
+          "package_name": "com.example.agenda_compumovil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919817436600-nckl90h65srrpb8fjd929ph8nipuhcqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.agenda_compumovil",
+            "certificate_hash": "1862f4c801f40f128c0add797546c67fef40133f"
+          }
+        },
+        {
+          "client_id": "919817436600-2gn7l0qg42ebbtjhek8iilu282kmd81n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQliTZtRPyJt3P053LDO1IW1hc0kyBwsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919817436600-2gn7l0qg42ebbtjhek8iilu282kmd81n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

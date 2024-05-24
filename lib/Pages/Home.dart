@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
           children: [
             Image.asset(
               'assets/images/logo.png',
-              height: 40, // Ajusta la altura de la imagen según sea necesario
+              height: 50, // Ajusta la altura de la imagen según sea necesario
             ),
             const SizedBox(width: 10), // Añade un espacio entre la imagen y el texto
             const Text(
