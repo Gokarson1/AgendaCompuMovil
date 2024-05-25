@@ -1,3 +1,4 @@
+import 'package:agenda_compumovil/Pages/pagtarea.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
@@ -15,7 +16,7 @@ class Home extends StatelessWidget {
     bool auth =false;
     try {
       final GoogleSignInAccount? account = await _googleSignIn.signIn();
-if (account!=null){
+  if (account!=null){
   GoogleSignInAuthentication authentication= await account.authentication;
   final String idToken = authentication.idToken ?? '';
   final String accessToken = authentication.accessToken ?? '';
@@ -54,8 +55,30 @@ if (account!=null){
         ),
         toolbarHeight: 80.0,
       ),
-      body: const Center(
-        child: Text("Sexo"),
+      body:  Center(
+        child: Padding(
+          padding:  const EdgeInsets.all(17),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 17),
+              ElevatedButton(onPressed: (){
+                _autenticacion().then((ok){
+                  if(ok){
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context){
+                        return const Pagtarea();
+                      },
+                      ));
+                  }else {
+                    _logger.e('fallo la authentication');
+                  }
+                });
+              } , 
+              child: const Text('iniciar sesion con google'))
+            ],
+          ),
+        ),
       ),
     );
   }
