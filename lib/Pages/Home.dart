@@ -1,4 +1,8 @@
+// ignore_for_file: file_names
+
+import 'package:agenda_compumovil/Pages/pagerror.dart';
 import 'package:agenda_compumovil/Pages/pagtarea.dart';
+import 'package:agenda_compumovil/Services/google_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
@@ -12,6 +16,7 @@ class Home extends StatelessWidget {
 
    Home({super.key});
 
+  // ignore: unused_element
   Future<bool> _autenticacion() async {
     bool auth =false;
     try {
@@ -55,31 +60,32 @@ class Home extends StatelessWidget {
         ),
         toolbarHeight: 80.0,
       ),
-      body:  Center(
-        child: Padding(
-          padding:  const EdgeInsets.all(17),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 17),
-              ElevatedButton(onPressed: (){
-                _autenticacion().then((ok){
-                  if(ok){
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context){
-                        return const Pagtarea();
-                      },
-                      ));
-                  }else {
-                    _logger.e('fallo la authentication');
-                  }
-                });
-              } , 
-              child: const Text('iniciar sesion con google'))
-            ],
-          ),
-        ),
+      body: Center(
+  child: Padding(
+    padding: const EdgeInsets.all(100.0),
+    child: ElevatedButton(
+      child: const Row(
+        children: [Icon(Icons.g_mobiledata), Text('Entrar con Google')],
       ),
+      onPressed: () {
+        GoogleService.logIn().then((result) {
+          if (result) {
+            _logger.i('Me pude autenticar');
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const Pagtarea();
+            }));
+          } else {
+            _logger.e('No fue posible autenticar');
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const PagError();
+            }));
+          }
+        });
+      },
+    ),
+  ),
+),
+
     );
   }
 }
