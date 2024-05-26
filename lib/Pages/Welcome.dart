@@ -1,6 +1,6 @@
 import 'package:agenda_compumovil/Pages/profile.dart';
 import 'package:agenda_compumovil/Services/Firebase.dart';
-import 'package:agenda_compumovil/atajos/Barra.dart';
+import 'package:agenda_compumovil/Widget/Barra.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {

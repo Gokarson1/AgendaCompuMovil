@@ -3,7 +3,7 @@
 
 import 'package:agenda_compumovil/Pages/Welcome.dart';
 import 'package:agenda_compumovil/Services/Firebase.dart';
-import 'package:agenda_compumovil/atajos/Barra.dart';
+import 'package:agenda_compumovil/Widget/Barra.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

@@ -1,4 +1,4 @@
-import 'package:agenda_compumovil/atajos/Barra.dart';
+import 'package:agenda_compumovil/Widget/Barra.dart';
 import 'package:flutter/material.dart';
 
 class Pagtarea extends StatelessWidget {
