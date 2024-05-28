@@ -1,4 +1,4 @@
-import '../Widget/Barra.dart';
+import 'package:agenda_compumovil/Widget/Barra.dart';
 import 'package:flutter/material.dart';
 
 class PagCalculadora extends StatefulWidget {
@@ -13,6 +13,7 @@ class _PagCalculadoraState extends State<PagCalculadora> {
   List<TextEditingController> porcentajesControllers = [TextEditingController(), TextEditingController()];
 
   double notaFinal = 0.0;
+  final int limiteNotas = 10;
 
   void calcularNotaFinal() {
     double sumaNotas = 0.0;
@@ -28,16 +29,39 @@ class _PagCalculadoraState extends State<PagCalculadora> {
   }
 
   void agregarNota() {
+    if (notasControllers.length < limiteNotas) {
+      setState(() {
+        notasControllers.add(TextEditingController());
+        porcentajesControllers.add(TextEditingController());
+      });
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Límite alcanzado'),
+          content: Text('No se pueden agregar más de $limiteNotas notas.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Aceptar'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void eliminarNota(int index) {
     setState(() {
-      notasControllers.add(TextEditingController());
-      porcentajesControllers.add(TextEditingController());
+      notasControllers.removeAt(index);
+      porcentajesControllers.removeAt(index);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: const MiBarra(titulo: "calculadora"),
+      appBar: const MiBarra(titulo: "Calculadora"),
 
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -63,6 +87,10 @@ class _PagCalculadoraState extends State<PagCalculadora> {
                           decoration: InputDecoration(labelText: 'Porcentaje Nota ${index + 1} (%)'),
                           keyboardType: TextInputType.number,
                         ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () => eliminarNota(index),
                       ),
                     ],
                   );
