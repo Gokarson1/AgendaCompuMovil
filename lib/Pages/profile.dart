@@ -1,6 +1,6 @@
 import 'package:agenda_compumovil/Pages/Welcome.dart';
 import 'package:agenda_compumovil/Services/Firebase.dart';
-import 'package:agenda_compumovil/Widget/barra_inf.dart';
+import 'package:agenda_compumovil/Widget/Barra.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +15,8 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Perfil =w="),
-      ),
+            appBar: const MiBarra(titulo: "Perfil"),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,7 +37,6 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       ),
-      bottomNavigationBar: const BarraInf(),
     );
   }
 }

@@ -1,6 +1,9 @@
 // lib/main.dart
+import 'package:agenda_compumovil/Pages/pagcalculadora.dart';
 import 'package:agenda_compumovil/Pages/pagcalendario.dart';
+import 'package:agenda_compumovil/Pages/paghorario.dart';
 import 'package:agenda_compumovil/Pages/pagtarea.dart';
+import 'package:agenda_compumovil/Pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class BarraInf extends StatefulWidget {
@@ -14,10 +17,11 @@ class _BarraInfState extends State<BarraInf> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Pagtarea(),
+    PagTarea(),
     PagCalendario(),
-    Text('Index 2: Horario'),
-    Text('Index 3: Calculadora'),
+    PagHorario(),
+    PagCalculadora(),
+    Profile()
   ];
 
   void _selectOption(int index) {
@@ -67,6 +71,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.calculate),
           label: 'Calculadora',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.man),
+          label: 'Perfil',
         ),
       ],
       currentIndex: selectedIndex,

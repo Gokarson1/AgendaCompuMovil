@@ -1,6 +1,6 @@
-import 'package:agenda_compumovil/Pages/profile.dart';
 import 'package:agenda_compumovil/Services/Firebase.dart';
 import 'package:agenda_compumovil/Widget/Barra.dart';
+import 'package:agenda_compumovil/Widget/barra_inf.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -22,11 +22,14 @@ class Home extends StatelessWidget {
             ),
             onPressed: () async{
               await FirebaseServices().signInWithGoogle();
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> const Profile()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const BarraInf()));
             },
           ),
         ),
       ),
+
+
+
     );
   }
 
