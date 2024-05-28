@@ -1,17 +1,17 @@
 import '../Widget/Barra.dart';
 import 'package:flutter/material.dart';
 
-class Pagtarea extends StatelessWidget {
-  const Pagtarea({super.key});
+class PagCalendario extends StatelessWidget {
+  const PagCalendario({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-appBar: MiBarra(titulo: "Tarea =w="),
+      appBar: MiBarra(titulo: "calendario =w="),
 
 
 
-      
+
     );
   }
 }
