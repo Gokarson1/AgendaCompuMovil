@@ -7,20 +7,16 @@ class MiFondo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Fondo
-        Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/fondo.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        // Child widget
-        child,
-      ],
+    return Scaffold(
+      body: 
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+             Image.asset("assets/images/fondo.jpg") 
+          ]
+        )
+      
+
     );
   }
 }

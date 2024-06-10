@@ -14,7 +14,18 @@ class Home extends StatelessWidget {
       
       appBar: const MiBarra(titulo: "Bienvenido =w="),
             
-      body: Center(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/fondo.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+
+            
+      
+      
+       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(100.0),
           child: ElevatedButton(
@@ -32,6 +43,7 @@ class Home extends StatelessWidget {
 
 
 
+    )
     );
   }
 
