@@ -1,5 +1,6 @@
 import '../Widget/Barra.dart';
 import 'package:flutter/material.dart';
+import '../Widget/menu_lateral.dart';
 
 class PagCalendario extends StatelessWidget {
   const PagCalendario({super.key});
@@ -7,7 +8,9 @@ class PagCalendario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: MiBarra(titulo: "calendario"),
+      appBar: MiBarra(titulo: "Calendario"),
+      drawer: MenuLateral(),
+
 
 
 
