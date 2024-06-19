@@ -14,12 +14,12 @@ class MiBarra extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: 80.0,
       leading: mostrarIconMenu
           ? IconButton(
-        icon: const Icon(Icons.menu , color: Colors.white, size: 35),
-        onPressed: (){
-          Scaffold.of(context).openDrawer();
-        },
-      )
-          :null,
+              icon: const Icon(Icons.menu, color: Colors.white, size: 35),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            )
+          : null,
       title: Stack(
         children: [
           Align(
@@ -33,20 +33,21 @@ class MiBarra extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           )
-
         ],
       ),
-
       actions: [
         Image.asset(
           'assets/images/logo.png',
           height: 50,
         ),
-        const SizedBox(width: 20,)
+        const SizedBox(
+          width: 20,
+        )
       ],
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(80.0); // Ajusta la altura de la barra aquí
+  Size get preferredSize =>
+      const Size.fromHeight(80.0); // Ajusta la altura de la barra aquí
 }
