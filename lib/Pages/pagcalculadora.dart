@@ -1,4 +1,5 @@
 import 'package:agenda_compumovil/Widget/Barra.dart';
+import 'package:agenda_compumovil/Widget/menu_lateral.dart';
 import 'package:flutter/material.dart';
 
 class PagCalculadora extends StatefulWidget {
@@ -63,7 +64,7 @@ class _PagCalculadoraState extends State<PagCalculadora> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MiBarra(titulo: "Calculadora"),
-
+      drawer: const MenuLateral(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

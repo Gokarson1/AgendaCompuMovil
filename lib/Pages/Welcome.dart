@@ -11,8 +11,8 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      appBar: const MiBarra(titulo: "Bienvenido =w="),
+      appBar: const MiBarra(titulo: "Bienvenido =w=",
+      mostrarIconMenu: false,),
             
       body: Container(
         decoration: const BoxDecoration(

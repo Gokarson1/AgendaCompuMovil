@@ -1,35 +1,53 @@
 import 'package:flutter/material.dart';
+import 'menu_lateral.dart';
 
 class MiBarra extends StatelessWidget implements PreferredSizeWidget {
   final String titulo;
+  final bool mostrarIconMenu;
 
-  const MiBarra({super.key, required this.titulo});
+  const MiBarra({super.key, required this.titulo, this.mostrarIconMenu = true});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color(0xFF232F4B),
-      title: Row(
+      toolbarHeight: 80.0,
+      leading: mostrarIconMenu
+          ? IconButton(
+              icon: const Icon(Icons.menu, color: Colors.white, size: 35),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            )
+          : null,
+      title: Stack(
         children: [
-          Image.asset(
-            'assets/images/logo.png',
-            height: 50, // Ajusta la altura de la imagen según sea necesario
-          ),
-          const SizedBox(width: 10), // Añade un espacio entre la imagen y el texto
-          Text(
-            titulo,
-            style: const TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 40,
-              color: Colors.white,
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              titulo,
+              style: const TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 40,
+                color: Colors.white,
+              ),
             ),
-          ),
+          )
         ],
       ),
-      toolbarHeight: 80.0,
+      actions: [
+        Image.asset(
+          'assets/images/logo.png',
+          height: 50,
+        ),
+        const SizedBox(
+          width: 20,
+        )
+      ],
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(80.0); // Ajusta la altura de la barra aquí
+  Size get preferredSize =>
+      const Size.fromHeight(80.0); // Ajusta la altura de la barra aquí
 }

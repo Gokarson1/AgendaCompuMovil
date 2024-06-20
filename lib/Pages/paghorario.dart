@@ -1,3 +1,4 @@
+import 'package:agenda_compumovil/Widget/menu_lateral.dart';
 import '../Widget/Barra.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,8 @@ class PagHorario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: MiBarra(titulo: "horario"),
+      appBar: MiBarra(titulo: "Horario"),
+      drawer: MenuLateral(),
 
 
 
