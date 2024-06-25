@@ -41,3 +41,75 @@ app.post('/login/google', async (req, res) => {
 app.listen(3000, () => {
   console.log('Servidor backend iniciado en el puerto 3000.');
 });
+
+
+// Endpoint para obtener tarea
+app.get('/tasks', async (req, res) => {
+  const { user } = req.query;
+
+  const tasksQuery = 'SELECT * FROM tareas WHERE usuario_google_id = $1';
+  const tasksValues = [user];
+
+  try {
+    const tasksResult = await pool.query(tasksQuery, tasksValues);
+    res.status(200).json(tasksResult.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener las tareas.');
+  }
+});
+
+// Endpoint para crear tarea
+app.post('/tasks', async (req, res) => {
+  const { usuarioGoogleId, titulo, descripcion, fechaVencimiento } = req.body;
+
+  const insertTaskQuery = `
+    INSERT INTO tareas (usuario_google_id, titulo, descripcion, fecha_vencimiento)
+    VALUES ($1, $2, $3, $4) RETURNING *
+  `;
+  const insertTaskValues = [usuarioGoogleId, titulo, descripcion, fechaVencimiento];
+
+  try {
+    const insertTaskResult = await pool.query(insertTaskQuery, insertTaskValues);
+    res.status(201).json(insertTaskResult.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al crear la tarea.');
+  }
+});
+
+//Endpoint para actalizar tarea
+app.post('/tasks', async (req, res) => {
+  const { usuarioGoogleId, titulo, descripcion, fechaVencimiento } = req.body;
+
+  const insertTaskQuery = `
+    INSERT INTO tareas (usuario_google_id, titulo, descripcion, fecha_vencimiento)
+    VALUES ($1, $2, $3, $4) RETURNING *
+  `;
+  const insertTaskValues = [usuarioGoogleId, titulo, descripcion, fechaVencimiento];
+
+  try {
+    const insertTaskResult = await pool.query(insertTaskQuery, insertTaskValues);
+    res.status(201).json(insertTaskResult.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al crear la tarea.');
+  }
+});
+
+//Borrar tarea
+
+app.delete('/tasks/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const deleteTaskQuery = 'DELETE FROM tareas WHERE id = $1';
+  const deleteTaskValues = [id];
+
+  try {
+    await pool.query(deleteTaskQuery, deleteTaskValues);
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al eliminar la tarea.');
+  }
+});
