@@ -1,18 +1,12 @@
-import 'package:agenda_compumovil/Pages/Welcome.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:agenda_compumovil/Services/Firebase.dart';
 import 'package:agenda_compumovil/Widget/Barra.dart';
 import 'package:agenda_compumovil/Widget/menu_lateral.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
+class Profile extends StatelessWidget {
   const Profile({super.key});
 
-  @override
-  State<Profile> createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -84,7 +78,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ],
                     ),
-                    )
+                  ),
                 ],
               ),
             ),
@@ -117,15 +111,9 @@ class _ProfileState extends State<Profile> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await FirebaseServices().signOut();
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const Home(),
-                  ),
-                );
+                await FirebaseServices().signOut(context);
               },
-               child: const Text('Cerrar Sesión'),
+              child: const Text('Cerrar Sesión'),
             )
           ],
         ),

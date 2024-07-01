@@ -59,17 +59,24 @@ class Home extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                     ),
                     onPressed: () async {
-                      await FirebaseServices().signInWithGoogle();
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const BarraInf()),
-                      );
+                      bool isSignedIn = await FirebaseServices().signInWithGoogle();
+                      if (isSignedIn) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const BarraInf()),
+                        );
+                      } else {
+                        // Muestra un mensaje de error o realiza alguna otra acción si el inicio de sesión falla
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('No se pudo iniciar sesión con Google')),
+                        );
+                      }
                     },
                     child: Image.asset(
                       'assets/images/googleicon.png',
-                      width: 60,
-                      height: 60,
+                      width: 70,
+                      height: 70,
                     ),
                   ),
                 ],
