@@ -4,8 +4,14 @@ import 'menu_lateral.dart';
 class MiBarra extends StatelessWidget implements PreferredSizeWidget {
   final String titulo;
   final bool mostrarIconMenu;
+  final TabBar? bottom; // Añadir la propiedad bottom
 
-  const MiBarra({super.key, required this.titulo, this.mostrarIconMenu = true});
+  const MiBarra({
+    super.key,
+    required this.titulo,
+    this.mostrarIconMenu = true,
+    this.bottom, // Añadir bottom al constructor
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +50,11 @@ class MiBarra extends StatelessWidget implements PreferredSizeWidget {
           width: 20,
         )
       ],
+      bottom: bottom, // Añadir bottom al AppBar
     );
   }
 
   @override
-  Size get preferredSize =>
-      const Size.fromHeight(80.0); // Ajusta la altura de la barra aquí
+  Size get preferredSize => Size.fromHeight(
+      bottom == null ? 80.0 : 120.0); // Ajusta la altura de la barra aquí
 }
