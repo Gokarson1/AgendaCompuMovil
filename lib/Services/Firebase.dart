@@ -1,13 +1,12 @@
-import 'package:agenda_compumovil/Pages/Welcome.dart';
+import 'package:agenda_compumovil/Services/Rest_service.dart';
+import 'package:agenda_compumovil/Services/backend_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logger/logger.dart';
 
 class FirebaseServices {
-
   final _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
   
@@ -39,10 +38,17 @@ class FirebaseServices {
         prefs.setString('email', googleSignInAccount.email);
         prefs.setString('name', googleSignInAccount.displayName ?? '');
         prefs.setString('image', googleSignInAccount.photoUrl ?? '');
+                
+           // Llamar al método access del RestService
+        await RestService.access(googleSignInAuthentication.idToken ?? '');
 
-        // Llamar al servicio REST para registrar el acceso a la aplicación
-        // Aquí deberías agregar la llamada a tu servicio REST
-        // RestService.access(googleSignInAuthentication.idToken);
+        
+        _logger.i("Token enviado al backend para registrar acceso.");
+        // Registrar o verificar usuario en el backend
+         await BackendService.registerUser(
+          googleSignInAccount.displayName ?? '',
+          googleSignInAccount.email,
+        );
 
         ok = true;
       } else {
