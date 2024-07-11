@@ -49,7 +49,7 @@ class _AccessListScreenState extends State<AccessListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MiBarra(titulo: "Tareas =w="),
+      appBar: const MiBarra(titulo: "Accesos"),
       drawer: const MenuLateral(),
      body: _isLoading
           ? const Center(child: CircularProgressIndicator())

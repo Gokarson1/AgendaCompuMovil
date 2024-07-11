@@ -3,7 +3,6 @@ import 'package:agenda_compumovil/Pages/pagcalculadora.dart';
 import 'package:agenda_compumovil/Pages/pagcalendario.dart';
 import 'package:agenda_compumovil/Pages/paghorario.dart';
 import 'package:agenda_compumovil/Pages/pagtarea.dart';
-import 'package:agenda_compumovil/Pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class BarraInf extends StatefulWidget {
@@ -21,7 +20,6 @@ class _BarraInfState extends State<BarraInf> {
     PagCalendario(),
     PagHorario(),
     PagCalculadora(),
-    Profile()
   ];
 
   void _selectOption(int index) {
@@ -72,13 +70,9 @@ class BottomNavigationBarWidget extends StatelessWidget {
           icon: Icon(Icons.calculate),
           label: 'Calculadora',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.man),
-          label: 'Perfil',
-        ),
       ],
       currentIndex: selectedIndex,
-      unselectedItemColor: Color.fromRGBO(185, 221, 255, 1),
+      unselectedItemColor: const Color.fromRGBO(185, 221, 255, 1),
       selectedItemColor: Colors.blue,
       backgroundColor: Colors.black,
       onTap: onItemTapped,

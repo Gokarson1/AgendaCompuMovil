@@ -9,7 +9,7 @@ class PagTarea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-    appBar: MiBarra(titulo: "Tareas =w="),
+    appBar: MiBarra(titulo: "Tareas"),
       drawer: MenuLateral(),
 
 
