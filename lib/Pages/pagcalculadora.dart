@@ -137,7 +137,6 @@ class _PagCalculadoraState extends State<PagCalculadora> {
         style: TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.bold,
-          color: Colors.blue, // Color del texto
         ),
       ),
     ),
@@ -158,7 +157,6 @@ GestureDetector(
         style: TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.bold,
-          color: Colors.blue, // Color del texto
         ),
       ),
     ),
@@ -179,6 +177,7 @@ const SizedBox(height: 5),
       style: const TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.bold,
+        color: Colors.blue,
       ),
     ),
   ),
