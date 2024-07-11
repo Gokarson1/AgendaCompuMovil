@@ -1,3 +1,5 @@
+import 'package:agenda_compumovil/Pages/accesos.dart';
+import 'package:agenda_compumovil/Widget/barra_inf.dart';
 import 'package:flutter/material.dart';
 
 class MenuLateral extends StatelessWidget {
@@ -22,11 +24,33 @@ class MenuLateral extends StatelessWidget {
             ),
           ),
           ListTile(
+            title: const Text('Inicio'),
+            leading: const Icon(Icons.home),
+            onTap: () {
+              Navigator.pop(context); // Cierra el Drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BarraInf()),
+              );
+            },
+          ),
+          ListTile(
             title: const Text('Configuración'),
             leading: const Icon(Icons.settings),
             onTap: () {
-              //añadir la funcion
               Navigator.pop(context); // Cierra el Drawer
+              // Aquí puedes agregar la navegación para Configuración si es necesario
+            },
+          ),
+          ListTile(
+            title: const Text('Accesos'),
+            leading: const Icon(Icons.lock_open),
+            onTap: () {
+              Navigator.pop(context); // Cierra el Drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  AccessListScreen()),
+              );
             },
           ),
         ],
