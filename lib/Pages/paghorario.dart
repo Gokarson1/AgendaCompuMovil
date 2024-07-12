@@ -40,17 +40,20 @@ class _PagHorarioState extends State<PagHorario> {
     super.dispose();
   }
 
-  Future<void> _cargarAsignaturas() async {
-    final prefs = await SharedPreferences.getInstance();
-    final List<String>? asignaturasJson = prefs.getStringList('asignaturas');
-    if (asignaturasJson != null) {
-      setState(() {
-        asignaturas = asignaturasJson
-            .map((json) => Asignatura.fromJson(jsonDecode(json)))
-            .toList();
-      });
-    }
+ Future<void> _cargarAsignaturas() async {
+  final prefs = await SharedPreferences.getInstance();
+  final List<String>? asignaturasJson = prefs.getStringList('asignaturas');
+  if (asignaturasJson != null) {
+    setState(() {
+      asignaturas = asignaturasJson
+          .map((json) => Asignatura.fromJson(jsonDecode(json)))
+          .toList();
+      
+      // Ordenar por hora de inicio
+      asignaturas.sort((a, b) => a.horaInicio.compareTo(b.horaInicio));
+    });
   }
+}
 
   Future<void> _guardarAsignaturas() async {
     final prefs = await SharedPreferences.getInstance();
@@ -61,11 +64,12 @@ class _PagHorarioState extends State<PagHorario> {
   }
 
   void _agregarClase(Asignatura asignatura) {
-    setState(() {
-      asignaturas.add(asignatura);
-      _guardarAsignaturas();
-    });
-  }
+  setState(() {
+    asignaturas.add(asignatura);
+    asignaturas.sort((a, b) => a.horaInicio.compareTo(b.horaInicio));
+    _guardarAsignaturas();
+  });
+}
 
   void _eliminarClase(Asignatura asignatura) {
     setState(() {
