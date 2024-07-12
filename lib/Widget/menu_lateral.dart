@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:agenda_compumovil/Services/Firebase.dart';
 
 class MenuLateral extends StatelessWidget {
-  const MenuLateral({Key? key}) : super(key: key);
+  const MenuLateral({super.key});
 
   @override
   Widget build(BuildContext context) {

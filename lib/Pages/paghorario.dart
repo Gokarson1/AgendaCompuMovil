@@ -7,7 +7,7 @@ import 'package:agenda_compumovil/models/asignatura.dart';
 import '../Widget/Barra.dart';
 
 class PagHorario extends StatefulWidget {
-  const PagHorario({super.key});
+  const PagHorario({Key? key}) : super(key: key);
 
   @override
   _PagHorarioState createState() => _PagHorarioState();
@@ -20,14 +20,24 @@ class _PagHorarioState extends State<PagHorario> {
     'Miércoles',
     'Jueves',
     'Viernes',
-    'Sábado'
+    'Sábado',
+    'Domingo'
   ];
   List<Asignatura> asignaturas = [];
+  late PageController _pageController;
+  int _currentPageIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: _currentPageIndex);
     _cargarAsignaturas();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   Future<void> _cargarAsignaturas() async {
@@ -66,68 +76,122 @@ class _PagHorarioState extends State<PagHorario> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: dias.length,
-      child: Scaffold(
-        appBar: MiBarra(
-          titulo: "Horario",
-          bottom: TabBar(
-            tabs: dias.map((dia) => Tab(text: dia)).toList(),
-            labelColor: Colors.blue,
-            unselectedLabelColor: Colors.grey,
-          ),
-        ),
-        drawer: const MenuLateral(),
-        body: TabBarView(
-          children: dias.map((dia) {
-            List<Asignatura> clasesDelDia = asignaturas
-                .where((asignatura) => asignatura.dia == dia)
-                .toList();
-            return ListView.builder(
-              itemCount: clasesDelDia.length,
-              itemBuilder: (context, index) {
-                final clase = clasesDelDia[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 8.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    elevation: 5,
-                    child: ListTile(
-                      title: Text(
-                        clase.nombre,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        '${clase.profesor} - ${clase.sala}\n${clase.horaInicio} - ${clase.horaFin}',
-                      ),
-                      isThreeLine: true,
-                      contentPadding: const EdgeInsets.all(16.0),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () => _eliminarClase(clase),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          }).toList(),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) => FormularioAgregarClase(
-                dias: dias,
-                onAgregarClase: _agregarClase,
+    return Scaffold(
+      appBar: const MiBarra(
+        titulo: "Horario",
+      ),
+      drawer: const MenuLateral(),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: Text(
+                dias[_currentPageIndex],
+                key: ValueKey<int>(_currentPageIndex),
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-            );
-          },
-        ),
+            ),
+          ),
+          Expanded(
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: dias.length,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPageIndex = index;
+                });
+              },
+              itemBuilder: (context, index) {
+                List<Asignatura> clasesDelDia = asignaturas
+                    .where((asignatura) => asignatura.dia == dias[index])
+                    .toList();
+                return clasesDelDia.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'Ninguna clase :P',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: clasesDelDia.length,
+                        itemBuilder: (context, index) {
+                          final clase = clasesDelDia[index];
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(4.0, 2.0, 4.0, 2.0),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          clase.horaInicio,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          clase.horaFin,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            clase.nombre,
+                                            style: const TextStyle(fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            '${clase.profesor} - ${clase.sala}',
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete),
+                                      onPressed: () => _eliminarClase(clase),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => FormularioAgregarClase(
+              dias: dias,
+              onAgregarClase: _agregarClase,
+            ),
+          );
+        },
       ),
     );
   }
