@@ -7,12 +7,12 @@ class BackendService {
 
   /// Función para registrar/verificar un usuario en el backend
   static Future<void> registerUser(String name, String email) async {
-   // _logger.i("email: $email");
+    // _logger.i("email: $email");
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.50.150:3002/register'),
-       headers: {
+        Uri.parse('http://127.0.0.1:3002/register'),
+        headers: {
           'Content-Type': 'application/json',
         },
         body: json.encode({
