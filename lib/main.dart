@@ -13,13 +13,13 @@ class Evento {
   final String titulo;
   final String descripcion;
   final DateTime fecha;
-  bool completado; // Nuevo campo para indicar si está completado o no
+  bool completado;
 
   Evento({
     required this.titulo,
     required this.descripcion,
     required this.fecha,
-    this.completado = false, // Valor por defecto es false (no completado)
+    this.completado = false,
   });
 }
 
