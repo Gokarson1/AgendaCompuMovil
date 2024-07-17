@@ -1,3 +1,4 @@
+
 import 'package:agenda_compumovil/Services/Rest_service.dart';
 import 'package:agenda_compumovil/Services/backend_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,10 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logger/logger.dart';
 
 class FirebaseServices {
-  final _auth = FirebaseAuth.instance;
-  final _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
-  
-  static final Logger _logger = Logger();
+  final _auth = FirebaseAuth.instance; // Maneja autenticacion de ususario en firebase
+  final _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);// Obtiene el email y perfil de ususario
+  static final Logger _logger = Logger();// registra mensajes y eventos importantes al ejecutar el codigo
 
   /// Metodo para iniciar sesion con Google y Firebase
   /// Devuelve true si el inicio de sesion es exitoso y false en caso contrario
@@ -18,8 +18,9 @@ class FirebaseServices {
     bool ok = false;
     try {
       _logger.i("Iniciando el proceso de inicio de sesión con Google...");
-      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
-
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn(); // Solicita al usuario que sellecione una cuenta de google
+     
+      //Autenticar con google y firebase
       if (googleSignInAccount != null) {
         _logger.i("Cuenta de Google seleccionada: ${googleSignInAccount.email}");
         final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
@@ -41,12 +42,11 @@ class FirebaseServices {
                 
            // Llamar al método access del RestService
         await RestService.access(googleSignInAuthentication.idToken ?? '');
-
-        
         _logger.i("Token enviado al backend para registrar acceso.");
+
         // Registrar o verificar usuario en el backend
          await BackendService.registerUser(
-          googleSignInAccount.displayName ?? '',
+          googleSignInAccount.displayName ?? '', 
           googleSignInAccount.email,
         );
 
@@ -65,6 +65,7 @@ class FirebaseServices {
   /// cerrar sesion de Google y Firebase
   Future<void> signOut(BuildContext context) async {
     try {
+      //cierra sesion en ambos servicios
       _logger.i("Cerrando sesión...");
       await _auth.signOut();
       await _googleSignIn.signOut();
@@ -76,7 +77,7 @@ class FirebaseServices {
       prefs.setString('email', '');
       prefs.setString('name', '');
       prefs.setString('image', '');
-// Navegar de vuelta a la página de inicio
+      // Navegar de vuelta a la página de inicio
       Navigator.pushNamedAndRemoveUntil(
       context,
       '/',
