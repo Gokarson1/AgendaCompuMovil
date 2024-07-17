@@ -7,6 +7,8 @@ import 'package:agenda_compumovil/Services/access_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccessListScreen extends StatefulWidget {
+  const AccessListScreen({super.key});
+
   @override
   _AccessListScreenState createState() => _AccessListScreenState();
 }
@@ -62,25 +64,25 @@ class _AccessListScreenState extends State<AccessListScreen> {
                         itemCount: _accesses.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-  contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-  title: Text(
-    'Usuario: ${_accesses[index].email}',
-    style: const TextStyle(fontWeight: FontWeight.bold),
-  ),
-  subtitle: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text('User Agent: ${_accesses[index].userAgent}'),
-      Row(
-        children: [
-          Text('Fecha: ${_accesses[index].created.day}/${_accesses[index].created.month}/${_accesses[index].created.year}'),
-          const SizedBox(width: 8),
-          Text('Hora: ${_accesses[index].created.hour.toString().padLeft(2, '0')}:${_accesses[index].created.minute.toString().padLeft(2, '0')}'),
-        ],
-      ),
-    ],
-  ),
-);
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                              title: Text(
+                                'Usuario: ${_accesses[index].email}',
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('User Agent: ${_accesses[index].userAgent}'),
+                                  Row(
+                                    children: [
+                                      Text('Fecha: ${_accesses[index].created.day}/${_accesses[index].created.month}/${_accesses[index].created.year}'),
+                                      const SizedBox(width: 8),
+                                      Text('Hora: ${_accesses[index].created.hour.toString().padLeft(2, '0')}:${_accesses[index].created.minute.toString().padLeft(2, '0')}'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
 
                         },
                         separatorBuilder: (context, index) => const Divider(),

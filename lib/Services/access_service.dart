@@ -17,9 +17,9 @@ class AccessService {
 
   static Future<List<AccessModel>> getAllAccesses(String email) async {
     try {
-      const String url = '$_baseUrl/v1/access/all';
-
-      _client.interceptors.add(LogInterceptor(
+      const String url = '$_baseUrl/v1/access/all'; // construye la url del endpoint
+      // configuracion de interceptores para registrar las solicitudes y respuestas
+      _client.interceptors.add(LogInterceptor( 
         request: true,
         requestHeader: true,
         responseBody: true,
@@ -27,9 +27,10 @@ class AccessService {
       ));
 
       Response response = await _client.get(url, 
-        queryParameters: {'email': email}, // Aquí se añade el parámetro 'email'
-        options: Options(headers: _headers));
-
+        queryParameters: {'email': email}, // parametro de consulta email
+        options: Options(headers: _headers)); // cabeceras http necesarias
+        
+      // verificacion de respuesta del servidor y manejo en caso de exito o errror
       if (response.statusCode == 200) {
         List<dynamic> data = response.data ?? [];
         List<AccessModel> accesses = data.map((json) => AccessModel.fromJson(json)).toList();

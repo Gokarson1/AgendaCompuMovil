@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../main.dart';
 
 class PagCalendario extends StatefulWidget {
-  const PagCalendario({Key? key}) : super(key: key);
+  const PagCalendario({super.key});
 
   @override
   _PagCalendarioState createState() => _PagCalendarioState();
@@ -38,18 +38,18 @@ class _PagCalendarioState extends State<PagCalendario> {
         String descripcion = '';
 
         return AlertDialog(
-          title: Text('Agregar Evento'),
+          title: const Text('Agregar Evento'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                decoration: InputDecoration(labelText: 'Título'),
+                decoration: const InputDecoration(labelText: 'Título'),
                 onChanged: (value) {
                   titulo = value;
                 },
               ),
               TextField(
-                decoration: InputDecoration(labelText: 'Descripción'),
+                decoration: const InputDecoration(labelText: 'Descripción'),
                 onChanged: (value) {
                   descripcion = value;
                 },
@@ -57,7 +57,7 @@ class _PagCalendarioState extends State<PagCalendario> {
             ],
           ),
           actions: [
-            TextButton(
+            FloatingActionButton(
               onPressed: () {
                 if (titulo.isNotEmpty && descripcion.isNotEmpty) {
                   Provider.of<EventoProvider>(context, listen: false).addEvento(
@@ -70,7 +70,7 @@ class _PagCalendarioState extends State<PagCalendario> {
                   Navigator.pop(context);
                 }
               },
-              child: Text('Guardar'),
+              child: const Icon(Icons.add),
             ),
           ],
         );
@@ -127,14 +127,12 @@ class _PagCalendarioState extends State<PagCalendario> {
                 }).toList(),
               ),
             const SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: _addEvento,
-                child: const Text('Agregar Evento'),
-              ),
-            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addEvento,
+        child: const Icon(Icons.add),
       ),
     );
   }

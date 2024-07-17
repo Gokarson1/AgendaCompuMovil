@@ -11,7 +11,7 @@ class BackendService {
 
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:3002/register'),
+        Uri.parse('https://agenda-compu-movil-5m2fy544hq-uc.a.run.app/register'),
         headers: {
           'Content-Type': 'application/json',
         },

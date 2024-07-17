@@ -124,7 +124,7 @@ class _PagHorarioState extends State<PagHorario> {
                         itemBuilder: (context, index) {
                           final clase = clasesDelDia[index];
                           return Padding(
-                            padding: const EdgeInsets.fromLTRB(4.0, 2.0, 4.0, 2.0),
+                            padding: const EdgeInsets.fromLTRB(2.0, 1.0, 2.0, 1.0),
                             child: Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
@@ -153,22 +153,29 @@ class _PagHorarioState extends State<PagHorario> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(width: 16),
+                                    const SizedBox(width: 20),
                                     Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            clase.nombre,
-                                            style: const TextStyle(fontWeight: FontWeight.bold),
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            '${clase.profesor} - ${clase.sala}',
-                                          ),
-                                        ],
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              clase.nombre,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,  // Ajusta el tamaño del texto aquí
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              '${clase.profesor} - ${clase.sala}',
+                                              style: const TextStyle(
+                                                fontSize: 16,  // Ajusta el tamaño del texto aquí
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
+
                                     IconButton(
                                       icon: const Icon(Icons.delete),
                                       onPressed: () => _eliminarClase(clase),

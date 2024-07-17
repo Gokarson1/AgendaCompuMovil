@@ -34,24 +34,27 @@ class RestService {
   static Future<void> access(String idToken) async {
     try {
       _logger.d('Marcando acceso de: $idToken');
-      JwtVo vo = JwtVo();
-      vo.jwt = idToken;
-      const String url = '$_baseUrl/v1/access/login';
-      _client.interceptors.add(LogInterceptor(
+      JwtVo vo = JwtVo();// Construye el objeto con el token de identificacion (idtoken)
+      vo.jwt = idToken;//este es el token que da el usuario
+      const String url = '$_baseUrl/v1/access/login'; // url del endpoit
+      _client.interceptors.add(LogInterceptor(// interceptores para resgistrar las solicitudes y respuestas
           request: true,
           requestHeader: true,
           requestBody: true,
           responseBody: true,
           responseHeader: true));
       Response<String> response = await _client.post(url,
-          data: vo.toJson(), options: Options(headers: _headers));
-      final int status = response.statusCode ?? 400;
-      final String jsonResponse = response.data ?? '';
+          data: vo.toJson(), // Esto contiene el token en formato json
+          options: Options(headers: _headers));//esto incluye las cebeceras http
+
+      //verificac la respuesta del servidor
+      final int status = response.statusCode ?? 400; //codigo de estado de respuesta
+      final String jsonResponse = response.data ?? ''; //cuerpo de la respuesta en formato json
       if (status >= 200 && status < 300) {
-        _logger.i('Respuesta correcta con código $status');
+        _logger.i('Respuesta correcta con código $status'); // respuesta exitosa
       } else {
-        _logger.e('Respuesta incorrecta con código $status');
-        _logger.e(jsonResponse);
+        _logger.e('Respuesta incorrecta con código $status'); // respuesta de error
+        _logger.e(jsonResponse); // registro del cuerpo de la respuesta si es erroenea
       }
     } catch (error, stackTrace) {
       _logger.e(error.toString());

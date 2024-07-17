@@ -16,6 +16,11 @@ const pool = new Pool({
   port: 5432,
 });
 
+// Endpoint de prueba "Hola Mundo"
+app.get('/', (req, res) => {
+  res.send('Hola Mundo');
+});
+
 app.post('/register', async (req, res) => {
   const { name, email } = req.body;
 
@@ -42,4 +47,4 @@ app.post('/register', async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-}); 
+});
