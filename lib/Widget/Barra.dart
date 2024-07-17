@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'menu_lateral.dart';
 
 class MiBarra extends StatelessWidget implements PreferredSizeWidget {
   final String titulo;

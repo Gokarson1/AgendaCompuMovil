@@ -21,7 +21,8 @@ class MenuLateral extends StatelessWidget {
               color: Color(0xFF232F4B),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Centra los elementos verticalmente
+              mainAxisAlignment: MainAxisAlignment
+                  .center, // Centra los elementos verticalmente
               children: [
                 Container(
                   width: 100,
@@ -45,7 +46,8 @@ class MenuLateral extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10), // Espacio adicional entre la imagen y el texto
+                const SizedBox(
+                    height: 10), // Espacio adicional entre la imagen y el texto
                 Text(
                   user?.displayName ?? '', // Nombre del usuario
                   style: const TextStyle(
@@ -54,7 +56,8 @@ class MenuLateral extends StatelessWidget {
                     fontFamily: 'Roboto', // Fuente Roboto
                   ),
                 ),
-                const SizedBox(height: 5), // Espacio adicional entre la imagen y el texto
+                const SizedBox(
+                    height: 5), // Espacio adicional entre la imagen y el texto
                 Text(
                   user?.email ?? '', // Email del usuario
                   style: const TextStyle(
@@ -67,9 +70,12 @@ class MenuLateral extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), // Márgenes internos al contenedor
+            margin: const EdgeInsets.symmetric(
+                horizontal: 10, vertical: 5), // Márgenes internos al contenedor
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade400), // Borde alrededor del contenedor
+              border: Border.all(
+                  color:
+                      Colors.grey.shade400), // Borde alrededor del contenedor
               borderRadius: BorderRadius.circular(5), // Bordes redondeados
             ),
             child: ListTile(
@@ -85,24 +91,30 @@ class MenuLateral extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), // Márgenes internos al contenedor
+            margin: const EdgeInsets.symmetric(
+                horizontal: 10, vertical: 5), // Márgenes internos al contenedor
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade400), // Borde alrededor del contenedor
+              border: Border.all(
+                  color:
+                      Colors.grey.shade400), // Borde alrededor del contenedor
               borderRadius: BorderRadius.circular(5), // Bordes redondeados
             ),
-            child: ListTile(
+            /*child: ListTile(
               title: const Text('Configuración'),
               leading: const Icon(Icons.settings),
               onTap: () {
                 Navigator.pop(context); // Cierra el Drawer
                 // Aquí puedes agregar la navegación para Configuración si es necesario
               },
-            ),
+            ),*/
           ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), // Márgenes internos al contenedor
+            margin: const EdgeInsets.symmetric(
+                horizontal: 10, vertical: 5), // Márgenes internos al contenedor
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade400), // Borde alrededor del contenedor
+              border: Border.all(
+                  color:
+                      Colors.grey.shade400), // Borde alrededor del contenedor
               borderRadius: BorderRadius.circular(5), // Bordes redondeados
             ),
             child: ListTile(
@@ -118,17 +130,19 @@ class MenuLateral extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), // Márgenes internos al contenedor
+            margin: const EdgeInsets.symmetric(
+                horizontal: 10, vertical: 5), // Márgenes internos al contenedor
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade400), // Borde alrededor del contenedor
+              border: Border.all(
+                  color:
+                      Colors.grey.shade400), // Borde alrededor del contenedor
               borderRadius: BorderRadius.circular(5), // Bordes redondeados
             ),
             child: ListTile(
               title: const Text('Log Out'),
               leading: const Icon(Icons.logout_outlined),
               onTap: () async {
-               await FirebaseServices().signOut(context);
-
+                await FirebaseServices().signOut(context);
               },
             ),
           ),
@@ -137,4 +151,3 @@ class MenuLateral extends StatelessWidget {
     );
   }
 }
-
