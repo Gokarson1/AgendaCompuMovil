@@ -1,45 +1,14 @@
-import 'package:agenda_compumovil/Pages/Welcome.dart';
-import 'package:firebase_core/firebase_core.dart';
+// lib/main.dart
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:agenda_compumovil/Pages/Welcome.dart';
+import 'package:agenda_compumovil/providers/evento_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
-}
-
-class Evento {
-  final String titulo;
-  final String descripcion;
-  final DateTime fecha;
-  bool completado;
-
-  Evento({
-    required this.titulo,
-    required this.descripcion,
-    required this.fecha,
-    this.completado = false,
-  });
-}
-
-class EventoProvider with ChangeNotifier {
-  final Map<DateTime, List<Evento>> _eventos = {};
-
-  Map<DateTime, List<Evento>> get eventos => _eventos;
-
-  void addEvento(Evento evento) {
-    if (_eventos[evento.fecha] == null) {
-      _eventos[evento.fecha] = [];
-    }
-    _eventos[evento.fecha]?.add(evento);
-    notifyListeners();
-  }
-
-  void toggleCompletado(Evento evento) {
-    evento.completado = !evento.completado;
-    notifyListeners();
-  }
 }
 
 class MyApp extends StatelessWidget {

@@ -1,78 +1,64 @@
-import 'dart:convert';
+// lib/providers/evento_provider.dart
+
+import 'dart:convert'; // Necesario para trabajar con JSON
+import 'package:agenda_compumovil/models/evento.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-class Evento {
-  final String titulo;
-  final String descripcion;
-  final DateTime fecha;
-  bool completado;
-
-  Evento({
-    required this.titulo,
-    required this.descripcion,
-    required this.fecha,
-    this.completado = false,
-  });
-
-  Map<String, dynamic> toJson() => {
-    'titulo': titulo,
-    'descripcion': descripcion,
-    'fecha': fecha.toIso8601String(),
-    'completado': completado,
-  };
-
-  static Evento fromJson(Map<String, dynamic> json) => Evento(
-    titulo: json['titulo'],
-    descripcion: json['descripcion'],
-    fecha: DateTime.parse(json['fecha']),
-    completado: json['completado'],
-  );
-}
+import 'package:shared_preferences/shared_preferences.dart'; // Importa SharedPreferences
 
 class EventoProvider with ChangeNotifier {
-  Map<DateTime, List<Evento>> _eventos = {};
+  final Map<DateTime, List<Evento>> _eventos = {};
 
   Map<DateTime, List<Evento>> get eventos => _eventos;
 
-  EventoProvider() {
-    _cargarEventos();
-  }
-
-  Future<void> _cargarEventos() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? eventosJson = prefs.getString('eventos');
-    if (eventosJson != null) {
-      final Map<String, dynamic> decodedJson = jsonDecode(eventosJson);
-      _eventos = decodedJson.map((key, value) {
-        final List<Evento> eventosList = (value as List).map((item) => Evento.fromJson(item)).toList();
-        return MapEntry(DateTime.parse(key), eventosList);
-      });
-      notifyListeners();
-    }
-  }
-
-  Future<void> _guardarEventos() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String eventosJson = jsonEncode(_eventos.map((key, value) {
-      return MapEntry(key.toIso8601String(), value.map((item) => item.toJson()).toList());
-    }));
-    prefs.setString('eventos', eventosJson);
-  }
-
   void addEvento(Evento evento) {
-    final fechaEvento = DateTime(evento.fecha.year, evento.fecha.month, evento.fecha.day);
-    if (_eventos[fechaEvento] == null) {
-      _eventos[fechaEvento] = [];
+    if (_eventos[evento.fecha] == null) {
+      _eventos[evento.fecha] = [];
     }
-    _eventos[fechaEvento]?.add(evento);
-    _guardarEventos();
+    _eventos[evento.fecha]?.add(evento);
     notifyListeners();
   }
 
   void toggleCompletado(Evento evento) {
     evento.completado = !evento.completado;
-    _guardarEventos();
     notifyListeners();
+  }
+
+  void eliminarEvento(Evento evento) {
+    _eventos[evento.fecha]?.remove(evento);
+    notifyListeners();
+  }
+
+  // Métodos para guardar y cargar eventos en SharedPreferences
+
+  Future<void> _guardarEventos() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('eventos', json.encode(_eventos));
+  }
+  
+Future<void> _cargarEventos() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  // Eliminar datos antiguos antes de cargar nuevos
+  await prefs.remove('eventos');
+
+  String? eventosString = prefs.getString('eventos');
+  
+  if (eventosString != null) {
+    Map<String, dynamic> eventosMap = json.decode(eventosString);
+    _eventos.clear();
+    eventosMap.forEach((key, value) {
+      DateTime dateTimeKey = DateTime.parse(key);
+      _eventos[dateTimeKey] = (value as List<dynamic>).map((e) => Evento.fromJson(e)).toList();
+    });
+    notifyListeners();
+  }
+}
+
+
+
+
+  // Llamar _cargarEventos() en el constructor o método de inicialización según necesites
+  EventoProvider() {
+    _cargarEventos();
   }
 }

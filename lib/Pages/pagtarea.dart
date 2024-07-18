@@ -1,15 +1,19 @@
+// lib/pages/pag_tarea.dart
+
 import 'package:flutter/material.dart';
 import '../Widget/menu_lateral.dart';
 import '../Widget/Barra.dart';
 import 'package:provider/provider.dart';
-import '../main.dart'; // Asegúrate de que este import es correcto
+import '../providers/evento_provider.dart';
+import '../models/evento.dart';
 
 class PagTarea extends StatelessWidget {
   const PagTarea({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final eventos = Provider.of<EventoProvider>(context).eventos;
+    final eventosProvider = Provider.of<EventoProvider>(context);
+    final eventos = eventosProvider.eventos;
 
     List<Evento> eventosPendientes = [];
     List<Evento> eventosCompletados = [];
@@ -44,33 +48,7 @@ class PagTarea extends StatelessWidget {
               if (eventosPendientes.isNotEmpty)
                 Column(
                   children: eventosPendientes.map((evento) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ListTile(
-                        title: Text(
-                          evento.titulo,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: Text(
-                          '${evento.descripcion}\nFecha: ${evento.fecha.day}/${evento.fecha.month}/${evento.fecha.year}',
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.check_circle),
-                          onPressed: () {
-                            Provider.of<EventoProvider>(context, listen: false)
-                                .toggleCompletado(evento);
-                          },
-                        ),
-                      ),
-                    );
+                    return _buildEventoTile(evento, context, eventosProvider);
                   }).toList(),
                 )
               else
@@ -96,34 +74,7 @@ class PagTarea extends StatelessWidget {
               if (eventosCompletados.isNotEmpty)
                 Column(
                   children: eventosCompletados.map((evento) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ListTile(
-                        title: Text(
-                          evento.titulo,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                        subtitle: Text(
-                          '${evento.descripcion}\nFecha: ${evento.fecha.day}/${evento.fecha.month}/${evento.fecha.year}',
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.check_circle),
-                          onPressed: () {
-                            Provider.of<EventoProvider>(context, listen: false)
-                                .toggleCompletado(evento);
-                          },
-                        ),
-                      ),
-                    );
+                    return _buildEventoTile(evento, context, eventosProvider);
                   }).toList(),
                 )
               else
@@ -140,6 +91,51 @@ class PagTarea extends StatelessWidget {
               const SizedBox(height: 20),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEventoTile(
+    Evento evento,
+    BuildContext context,
+    EventoProvider eventosProvider,
+  ) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ListTile(
+        title: Text(
+          evento.titulo,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            decoration:
+                evento.completado ? TextDecoration.lineThrough : null,
+          ),
+        ),
+        subtitle: Text(
+          '${evento.descripcion}\nFecha: ${evento.fecha.day}/${evento.fecha.month}/${evento.fecha.year}',
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                eventosProvider.eliminarEvento(evento);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.check_circle),
+              onPressed: () {
+                eventosProvider.toggleCompletado(evento);
+              },
+            ),
+          ],
         ),
       ),
     );

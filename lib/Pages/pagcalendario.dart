@@ -1,12 +1,14 @@
+// lib/pages/pag_calendario.dart
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../Widget/Barra.dart';
 import '../Widget/menu_lateral.dart';
 import 'package:provider/provider.dart';
-import '../main.dart'; // Asegúrate de que este import es correcto
+import '../providers/evento_provider.dart';
+import '../models/evento.dart';
 
 class PagCalendario extends StatefulWidget {
-  const PagCalendario({super.key});
+  const PagCalendario({Key? key}) : super(key: key);
 
   @override
   _PagCalendarioState createState() => _PagCalendarioState();
@@ -116,7 +118,10 @@ class _PagCalendarioState extends State<PagCalendario> {
                 firstDay: DateTime.utc(2010, 10, 16),
                 lastDay: DateTime.utc(2030, 4, 16),
                 focusedDay: _focusedDay,
-                selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
+                selectedDayPredicate: (day) =>
+                    DateTime.utc(day.year, day.month, day.day) ==
+                    DateTime.utc(_selectedDay.year, _selectedDay.month,
+                        _selectedDay.day),
                 calendarFormat: _calendarFormat,
                 headerStyle: const HeaderStyle(
                   formatButtonVisible: true,
@@ -141,6 +146,35 @@ class _PagCalendarioState extends State<PagCalendario> {
                 eventLoader: (day) {
                   return eventos[day] ?? [];
                 },
+                calendarBuilders: CalendarBuilders(
+                  markerBuilder: (context, day, events) {
+                    if (events.isNotEmpty) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _selectedDay.isAtSameMomentAs(day)
+                              ? Theme.of(context).primaryColor
+                              : Colors.blue,
+                        ),
+                        width: 16.0,
+                        height: 16.0,
+                        child: Center(
+                          child: Text(
+                            '${events.length}',
+                            style: const TextStyle().copyWith(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 10),
