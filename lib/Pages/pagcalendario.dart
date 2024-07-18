@@ -3,7 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../Widget/Barra.dart';
 import '../Widget/menu_lateral.dart';
 import 'package:provider/provider.dart';
-import '../main.dart';
+import '../main.dart'; // Asegúrate de que este import es correcto
 
 class PagCalendario extends StatefulWidget {
   const PagCalendario({super.key});
@@ -143,7 +143,7 @@ class _PagCalendarioState extends State<PagCalendario> {
                 },
               ),
             ),
-            const SizedBox(height: 10), // Adjusted spacing
+            const SizedBox(height: 10),
             if (eventos[_selectedDay] != null &&
                 eventos[_selectedDay]!.isNotEmpty)
               Column(
@@ -182,10 +182,10 @@ class _PagCalendarioState extends State<PagCalendario> {
                   ),
                 ),
               ),
-            const SizedBox(height: 10), // Adjusted spacing
+            const SizedBox(height: 10),
             Center(
               child: Container(
-                margin: const EdgeInsets.only(top: 10.0), // Adjusted spacing
+                margin: const EdgeInsets.only(top: 10.0),
                 child: ElevatedButton(
                   onPressed: _addEvento,
                   child: const Text('Agregar Evento'),
