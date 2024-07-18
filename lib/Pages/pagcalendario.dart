@@ -196,26 +196,35 @@ class _PagCalendarioState extends State<PagCalendario> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: eventos[_selectedDay]!.map((evento) {
                   return Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: ListTile(
-                      title: Text(evento.titulo),
-                      subtitle: Text(evento.descripcion),
-                    ),
-                  );
+                            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                            padding: const EdgeInsets.all(16.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: ListTile(
+                              title: Text(
+                                evento.titulo,
+                                style: const TextStyle(
+                                  fontSize: 20, // Ajusta el tamaño de la letra aquí
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                evento.descripcion,
+                                style: const TextStyle(fontSize: 18), // Ajusta el tamaño de la letra aquí
+                              ),
+                            ),
+                          );
+
                 }).toList(),
               )
             else
