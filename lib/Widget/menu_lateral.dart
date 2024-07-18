@@ -90,24 +90,7 @@ class MenuLateral extends StatelessWidget {
               },
             ),
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(
-                horizontal: 10, vertical: 5), // Márgenes internos al contenedor
-            decoration: BoxDecoration(
-              border: Border.all(
-                  color:
-                      Colors.grey.shade400), // Borde alrededor del contenedor
-              borderRadius: BorderRadius.circular(5), // Bordes redondeados
-            ),
-            /*child: ListTile(
-              title: const Text('Configuración'),
-              leading: const Icon(Icons.settings),
-              onTap: () {
-                Navigator.pop(context); // Cierra el Drawer
-                // Aquí puedes agregar la navegación para Configuración si es necesario
-              },
-            ),*/
-          ),
+         
           Container(
             margin: const EdgeInsets.symmetric(
                 horizontal: 10, vertical: 5), // Márgenes internos al contenedor

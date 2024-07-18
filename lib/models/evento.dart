@@ -18,10 +18,12 @@ class Evento {
     'completado': completado,
   };
 
-  static Evento fromJson(Map<String, dynamic> json) => Evento(
+  static Evento fromJson(Map<String, dynamic> json) {
+  return Evento(
     titulo: json['titulo'],
     descripcion: json['descripcion'],
     fecha: DateTime.parse(json['fecha']),
     completado: json['completado'] ?? false,
   );
+}
 }

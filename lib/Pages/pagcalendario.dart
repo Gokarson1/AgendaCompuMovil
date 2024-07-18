@@ -1,4 +1,5 @@
-// lib/pages/pag_calendario.dart
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../Widget/Barra.dart';
@@ -6,6 +7,7 @@ import '../Widget/menu_lateral.dart';
 import 'package:provider/provider.dart';
 import '../providers/evento_provider.dart';
 import '../models/evento.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PagCalendario extends StatefulWidget {
   const PagCalendario({Key? key}) : super(key: key);
@@ -24,6 +26,16 @@ class _PagCalendarioState extends State<PagCalendario> {
     super.initState();
     _selectedDay = DateTime.now();
     _focusedDay = DateTime.now();
+    _cargarEventos(); // Cargar eventos al iniciar la página
+  }
+
+  void _cargarEventos() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? eventosJson = prefs.getString('eventos');
+    if (eventosJson != null) {
+      final Map<String, dynamic> eventosMap = jsonDecode(eventosJson);
+      Provider.of<EventoProvider>(context, listen: false).cargarEventosDesdeMapa(eventosMap);
+    }
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {

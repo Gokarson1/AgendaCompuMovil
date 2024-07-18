@@ -1,4 +1,4 @@
-// lib/pages/pag_tarea.dart
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import '../Widget/menu_lateral.dart';
@@ -6,9 +6,30 @@ import '../Widget/Barra.dart';
 import 'package:provider/provider.dart';
 import '../providers/evento_provider.dart';
 import '../models/evento.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class PagTarea extends StatelessWidget {
+class PagTarea extends StatefulWidget {
   const PagTarea({Key? key}) : super(key: key);
+
+  @override
+  _PagTareaState createState() => _PagTareaState();
+}
+
+class _PagTareaState extends State<PagTarea> {
+  @override
+  void initState() {
+    super.initState();
+    _cargarEventos(); // Cargar eventos al iniciar la página
+  }
+
+  void _cargarEventos() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? eventosJson = prefs.getString('eventos');
+    if (eventosJson != null) {
+      final Map<String, dynamic> eventosMap = jsonDecode(eventosJson);
+      Provider.of<EventoProvider>(context, listen: false).cargarEventosDesdeMapa(eventosMap);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
